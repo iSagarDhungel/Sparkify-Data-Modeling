@@ -6,7 +6,12 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
-    # open song file
+    """Read json formatted song files, and selects relevant column to insert to song table and artist table
+
+    Keyword arguments:
+    cur -- cursor for postgresql database
+    filepath -- path of directory containing data files
+    """
     df = pd.read_json(filepath, lines=True)
 
     # insert song record
@@ -20,7 +25,12 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
-    # open log file
+    """Read json formatted log files, filters data by 'NextSong' action then prepares required column to insert to time table and songplay table
+
+    Keyword arguments:
+    cur -- cursor for postgresql database
+    filepath -- path of directory containing data files
+    """
     df = pd.read_json(filepath, lines=True)
 
     # filter by NextSong action
