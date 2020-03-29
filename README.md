@@ -35,4 +35,4 @@ In addition to the data files, the project workspace includes six files:
 ## Usuage
 The dependencies are listed in requirement.txt<br/>
 `etl.ipynb` and `test.ipynb` are jupyter notebook files and can be run using jupyter notebook<br/>
-`create_tables.py` and `etl.pycan be run using python terminal `python filename.py`<br/>
+`create_tables.py` and `etl.py` can be run using python terminal `python filename.py`<br/>
