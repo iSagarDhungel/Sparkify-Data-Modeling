@@ -1,7 +1,7 @@
 ## Problem Statement
 A startup called Sparkify wants to analyze the data they've been collecting on songs and user activity on their new music streaming app. The analytics team is particularly interested in understanding what songs users are listening to. Currently, they don't have an easy way to query their data, which resides in a directory of JSON logs on user activity on the app, as well as a directory with JSON metadata on the songs in their app.
 
-## Task
+# Task 1: Relational Data Modeling
 Create a Postgres database with tables designed to optimize queries on song play analysis by creating a database schema and ETL pipeline for this analysis.
 
 ## Dataset
@@ -32,7 +32,29 @@ In addition to the data files, the project workspace includes six files:
 > `sql_queries.py` contains all your sql queries, and is imported into the last three files above.<br/>
 > `README.md` provides discussion on your project.<br/>
 
-## Usuage
+# Task 2: Non-Relational Data Modeling
+
+<p>Creating of the ETL pipeline that transfers data from a set of CSV files within a directory to create a streamlined CSV file to model and insert data into Apache Cassandra tables. The associate directory is [Cassendra](https://github.com/iSagarDhungel/Sparkify-Data-Modeling/tree/master/Cassandra) The tasks are described in detail as:</p>
+
+1. Process the event_datafile_new.csv dataset to create a denormalized dataset
+2. Model the data tables considering the queries you need to run
+3. Lload the data into tables using Apache Cassandra and run the queries
+
+<p> The generated No-SQL table has following column discription:</p>
+
+- artist 
+- firstName of user
+- gender of user
+- item number in session
+- last name of user
+- length of the song
+- level (paid or free song)
+- location of the user
+- sessionId
+- song title
+- userId
+
+## Usage
 The dependencies are listed in requirement.txt<br/>
 `etl.ipynb` and `test.ipynb` are jupyter notebook files and can be run using jupyter notebook<br/>
 `create_tables.py` and `etl.py` can be run using python terminal `python filename.py`<br/>
