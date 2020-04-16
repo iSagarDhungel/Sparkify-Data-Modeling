@@ -28,10 +28,14 @@ def process_song_data(spark, input_data, output_data):
     """
     process all song from json files from input_data and writes it to output_data directory
     
+    args:
+    inputdata = input data directory (s3)
+    outputdata = output data directory (s3)
+    spark = sprak session object
     """
-    # get filepath to song data file
-    song_data = input_data + 'song_data/*/*/*'
-#     spark.read.json("s3a://udacity-dend/song-data")
+    # get filepath to song data file 
+    song_data = f'{input_data}/song-data/A/A/A/*.json' # smaller subsection
+    #song_data = f'{input_data}/song-data/*/*/*/*.json'
     # read song data file
     df = spark.read.json(song_data)
 
@@ -44,7 +48,7 @@ def process_song_data(spark, input_data, output_data):
     # extract columns to create artists table
     artists_table = (
         df.select(
-            artist_id,
+            'artist_id',
             col('artist_name'),
             col('artist_location'),
             col('artist_latitude'),
@@ -58,9 +62,15 @@ def process_song_data(spark, input_data, output_data):
 def process_log_data(spark, input_data, output_data):
     """ 
     Process all logs of sparkfy app usuage; filters by NextSong
+    
+    args:
+    inputdata = input data directory (s3)
+    outputdata = output data directory (s3)
+    spark = sprak session object
     """
+
     # get filepath to log data file
-    log_data = "{}*/*/*events.json".format(input_data)
+    log_data = input_data + '/log_data/A/A/A/*.json'
 
     # read log data file
     df = spark.read.json(log_data).dropDuplicates()
@@ -110,7 +120,7 @@ def process_log_data(spark, input_data, output_data):
 def main():
     spark = create_spark_session()
     input_data = "s3a://udacity-dend/"
-    output_data = "s3a://udacity-dend"
+    output_data = "s3a://buckudacity/data"
     
     process_song_data(spark, input_data, output_data)    
     process_log_data(spark, input_data, output_data)
