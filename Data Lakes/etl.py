@@ -38,8 +38,8 @@ def process_song_data(spark, input_data, output_data):
     spark = sprak session object
     """
     # get filepath to song data file
-    song_data = os.path.join(input_data,"song_data/A/B/C/TRABCEI128F424C983.json")
-    #song_data = os.path.join(input_data,"song_data/*/*/*/*.json")
+    #song_data = os.path.join(input_data,"song_data/A/B/C/TRABCEI128F424C983.json")
+    song_data = os.path.join(input_data,"song_data/*/*/*/*.json")
     # read song data file
     df = spark.read.json(song_data)
     # extract columns to create songs table
@@ -65,8 +65,8 @@ def process_log_data(spark, input_data, output_data):
     spark = sprak session object
     """
     # get filepath to log data file
-    log_data =os.path.join(input_data,"log_data/2018/11/2018-11-12-events.json")
-    #log_data =os.path.join(input_data,"log_data/*/*/*.json")
+    #log_data =os.path.join(input_data,"log_data/2018/11/2018-11-12-events.json")
+    log_data =os.path.join(input_data,"log_data/*/*/*.json")
 
     # read log data file
     df = spark.read.json(log_data)
@@ -76,6 +76,7 @@ def process_log_data(spark, input_data, output_data):
 
     # extract columns for users table 
     users_table = df['userId', 'firstName', 'lastName', 'gender', 'level']
+    users_table = users_table.drop_duplicates(subset=['userId'])
     
     # write users table to parquet files
     users_table.write.parquet(os.path.join(output_data, 'users.parquet'), 'overwrite')
@@ -114,7 +115,7 @@ def process_log_data(spark, input_data, output_data):
     songplays_table = df['start_time', 'userId', 'level', 'song_id', 'artist_id', 'sessionId', 'location', 'userAgent']
     songplays_table.select(monotonically_increasing_id().alias('songplay_id')).collect()
     # write songplays table to parquet files partitioned by year and month
-    songplays_table.write.parquet(os.path.join(output_data, 'songplays.parquet'), 'overwrite')
+    songplays_table.write.partitionBy("year", "month").parquet(os.path.join(output_data, 'songplays.parquet'), 'overwrite')
 
 
 
