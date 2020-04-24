@@ -37,7 +37,7 @@ For NoSQL databases, we design the schema based on the queries we know we want t
 ## Database Schema
 ![Schema](../Images/2_Schema.JPG)
 
-This data model is called a **start schema** data model. At it's aim is a **Fact Table -songplays-** that containg fact on song play like user agent, location, session or user's level and then have columns of **foreign keys (FK)** of **4 dimension tables** :
+This data model is called a **star schema** data model. At it's aim is a **Fact Table -songplays-** that containg fact on song play like user agent, location, session or user's level and then have columns of **foreign keys (FK)** of **4 dimension tables** :
 
 * **Songs** table with data about songs
 * **Artists** table
