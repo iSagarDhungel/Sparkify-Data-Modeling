@@ -18,6 +18,8 @@ We will be moving two data sources from a public S3 buckets to Amazon Web Servic
 ## WAREHOUSE SCHEMA
 Using the song and event datasets, we'll need to create a star schema optimized for queries on song play analysis. This includes
 
+![DAG](../Images/3_Schema.JPG)
+
 #### Fact Table
 1. songplays
 records in event data associated with song plays i.e. records with page NextSong. The entities include `songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent`
