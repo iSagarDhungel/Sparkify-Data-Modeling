@@ -1,6 +1,6 @@
 # Data Pipelines with Airflow
 
-## Introduction
+# Introduction
 A music streaming company, Sparkify, has decided that it is time to introduce more 
 automation and monitoring to their data warehouse ETL pipelines and come to the 
 conclusion that the best tool to achieve this is Apache Airflow.
@@ -16,7 +16,29 @@ The source data resides in S3 and needs to be processed in Sparkify's data wareh
 in Amazon Redshift. The source datasets consist of CSV logs that tell about user 
 activity in the application and JSON metadata about the songs the users listen to.
 
-### ELT Process
+## Project Structure
+```
+Data Pipeline with Apache Airflow
+│   README.md                # Project description
+│   create_tables.sql        # SQL for creating tables                 
+└───dags                     
+|   │ s3_to_redshift_dag.py  # DAG definition
+|   
+└───Practice Notebooks       # Jupyter notebooks
+|
+└───plugins
+   │  
+   └───helpers
+   |   | sql_queries.py     # All sql queries needed
+   |
+   └───operators
+   |   | data_quality.py    # DataQualityOperator
+   |   | load_dimension.py  # LoadDimensionOperator
+   |   | load_fact.py       # LoadFactOperator
+   |   | stage_redshift.py  # StageToRedshiftOperator
+```
+
+## ELT Process
 
 The tool used for scheduling and orchestrationg ELT is Apache Airflow.
 
@@ -25,16 +47,17 @@ The Task view of the ELT pipeline is this DAG:
 ![DAG](../Images/5_task_view.JPG)
 
 Also tree view for the pipeline is: 
+
 ![DAG](../Images/5_tree_view.JPG)
 
-### Sources
+## Sources
 
-The sources are the same than previous projects:
+The sources are the same as previous projects:
 
 * `Log data: s3://udacity-dend/log_data`
 * `Song data: s3://udacity-dend/song_data`
 
-### Destinations
+## Schema and ETL
 
 Data is inserted into Amazon Redshift Cluster. The goal is populate an star schema:
 
@@ -54,30 +77,13 @@ By the way we need two staging tables:
 * `Stage_events`
 * `Stage_songs`
 
-##### Prerequisite   
+## Prerequisite   
 
 Tables must be created in Redshift before executing the DAG workflow. The create tables script can be found in:
-
 `create_tables.sql`
 
 
-
-### Project Structure
-
-* /
-    * `create_tables.sql` - Contains the DDL for all tables used in this projecs
-* dags
-    * `udac_example_dag.py` - The DAG configuration file to run in Airflow
-* plugins
-    * operators
-        * `stage_redshift.py` - Operator to read files from S3 and load into Redshift staging tables
-        * `load_fact.py` - Operator to load the fact table in Redshift
-        * `load_dimension.py` - Operator to read from staging tables and load the dimension tables in Redshift
-        * `data_quality.py` - Operator for data quality checking
-    * helpers
-        * `sql_queries` - Redshift statements used in the DAG
-
-### Data Quality Checks
+## Data Quality Checks
 
 In order to ensure the tables were loaded, 
 a data quality checking is performed to count the total records each table has. 
